@@ -3,9 +3,8 @@ import sys
 import pygame
 
 from src import ball
+from src.config import SCREEN_HEIGHT, SCREEN_WIDTH
 
-SCREEN_HEIGHT = 720
-SCREEN_WIDTH = 1280
 SCREEN_RECT = pygame.Rect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)
 
 

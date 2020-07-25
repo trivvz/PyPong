@@ -3,6 +3,7 @@ import unittest
 import numpy as np
 
 from src import ball
+from src.config import SCREEN_HEIGHT
 
 
 class TestBall(unittest.TestCase):
@@ -41,3 +42,9 @@ class TestBall(unittest.TestCase):
         test_ball.update()
         self.assertEqual(test_ball.pos[0], 30.5)
         self.assertEqual(test_ball.pos[1], 69.9)
+
+    def test_ball_update_change_direction(self):
+        test_ball = ball.Ball((0, SCREEN_HEIGHT), (-10, 5))
+        test_ball.update()
+        self.assertEqual(test_ball.pos[0], 10)
+        self.assertEqual(test_ball.pos[1], SCREEN_HEIGHT - 5)

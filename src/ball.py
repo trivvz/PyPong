@@ -3,6 +3,8 @@ from typing import Tuple
 import  pygame
 import numpy as np
 
+from src.config import SCREEN_HEIGHT, SCREEN_WIDTH
+
 BALL_COLOR = (255, 255, 255)
 BALL_SIZE = 5
 
@@ -19,4 +21,9 @@ class Ball:
         pygame.draw.circle(screen, self.color, (int(self.pos[0]), int(self.pos[1])), self.radius)
 
     def update(self) -> None:
+        if self.pos[0] <= 0 or self.pos[0] >= SCREEN_WIDTH:
+            self.speed[0] *= -1
+        if self.pos[1] <= 0 or self.pos[1] >= SCREEN_HEIGHT:
+            self.speed[1] *= -1
+
         self.pos += self.speed
