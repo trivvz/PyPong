@@ -7,6 +7,7 @@ from src.config import SCREEN_HEIGHT, SCREEN_WIDTH
 
 PADDLE_COLOR = (255, 255, 255)
 PADDLE_SIZE = (5, 50)
+PADDLE_STEP = 15
 
 
 class Paddle:
@@ -16,6 +17,7 @@ class Paddle:
 
     def __init__(self, y: float = SCREEN_HEIGHT // 2):
         self.y = y
+        self.speed = 0
 
     def draw(self, screen) -> None:
         pygame.draw.rect(
@@ -29,5 +31,14 @@ class Paddle:
             ),
         )
 
-    def update(self) -> None:
-        pass
+    def update(self):
+        self.y += self.speed
+
+    def up(self) -> None:
+        self.speed = -PADDLE_STEP
+
+    def down(self) -> None:
+        self.speed = PADDLE_STEP
+
+    def stop(self) -> None:
+        self.speed = 0

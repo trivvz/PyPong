@@ -23,8 +23,7 @@ def main():
         # Clear screen
         screen.fill((0, 0, 0))
         my_ball.update()
-        my_ball.draw(screen)
-        my_paddle.draw(screen)
+        my_paddle.update()
 
         for event in pygame.event.get():
 
@@ -33,7 +32,22 @@ def main():
                 pygame.quit()
                 sys.exit()
 
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_UP:
+                    my_paddle.up()
+
+                if event.key == pygame.K_DOWN:
+                    my_paddle.down()
+
+            if event.type == pygame.KEYUP:
+                if event.key == pygame.K_UP or event.key == pygame.K_DOWN:
+                    my_paddle.stop()
+
         clock.tick(60)
+
+        my_ball.draw(screen)
+        my_paddle.draw(screen)
+
         pygame.display.flip()
 
 
