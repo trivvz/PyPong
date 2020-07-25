@@ -2,7 +2,7 @@ import sys
 
 import pygame
 
-from src import ball
+from src import ball, paddle
 from src.config import SCREEN_HEIGHT, SCREEN_WIDTH
 
 SCREEN_RECT = pygame.Rect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)
@@ -17,13 +17,14 @@ def main():
     pygame.draw.circle(screen, (255, 255, 255), (100, 100), 10)
 
     my_ball = ball.Ball((SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2), (5, 5))
-    my_ball.draw(screen)
+    my_paddle = paddle.Paddle()
 
     while True:
         # Clear screen
         screen.fill((0, 0, 0))
         my_ball.update()
         my_ball.draw(screen)
+        my_paddle.draw(screen)
 
         for event in pygame.event.get():
 
@@ -36,5 +37,5 @@ def main():
         pygame.display.flip()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
