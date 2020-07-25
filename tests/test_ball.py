@@ -1,21 +1,21 @@
 import unittest
 
-from src.ball import Ball, BALL_SIZE, BALL_COLOR
+from src import ball
 
 
 class TestBall(unittest.TestCase):
     def test_ball_x(self):
-        ball = Ball(10, 20)
-        self.assertEqual(ball.x, 10)
+        test_ball = ball.Ball(10, 20)
+        self.assertEqual(test_ball.x, 10)
 
     def test_ball_y(self):
-        ball = Ball(10, 20)
-        self.assertEqual(ball.y, 20)
+        test_ball = ball.Ball(10, 20)
+        self.assertEqual(test_ball.y, 20)
 
     def test_ball_color(self):
-        ball = Ball()
-        self.assertEqual(ball.color, BALL_COLOR)
+        test_ball = ball.Ball()
+        self.assertEqual(test_ball.color, ball.BALL_COLOR)
 
     def test_ball_size(self):
-        ball = Ball()
-        self.assertEqual(ball.size, BALL_SIZE)
+        test_ball = ball.Ball()
+        self.assertEqual(test_ball.size, ball.BALL_SIZE)
