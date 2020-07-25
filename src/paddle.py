@@ -14,7 +14,7 @@ class Paddle:
     color = PADDLE_COLOR
     size = PADDLE_SIZE
     speed = PADDLE_STEP
-    x = int(0.9 * SCREEN_WIDTH)
+    x = int(0.95 * SCREEN_WIDTH)
 
     def __init__(self, y: float = SCREEN_HEIGHT // 2):
         self.y = round(y, -1)

@@ -22,8 +22,8 @@ def main():
     while True:
         # Clear screen
         screen.fill((0, 0, 0))
-        my_ball.update()
         my_paddle.update()
+        my_ball.update(my_paddle)
 
         for event in pygame.event.get():
 
@@ -45,8 +45,8 @@ def main():
 
         clock.tick(60)
 
-        my_ball.draw(screen)
         my_paddle.draw(screen)
+        my_ball.draw(screen)
 
         pygame.display.flip()
 

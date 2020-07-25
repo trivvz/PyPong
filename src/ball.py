@@ -22,8 +22,19 @@ class Ball:
             screen, self.color, (int(self.pos[0]), int(self.pos[1])), self.radius
         )
 
-    def update(self) -> None:
-        if self.pos[0] <= 0 or self.pos[0] >= SCREEN_WIDTH:
+    def update(self, paddle) -> None:
+        if (
+            self.pos[0] <= 0
+            or self.pos[0] >= SCREEN_WIDTH
+            or (
+                paddle.x + paddle.size[0] / 2
+                >= self.pos[0]
+                >= paddle.x - paddle.size[0] / 2
+                and paddle.y + paddle.size[1] / 2
+                >= self.pos[1]
+                >= paddle.y - paddle.size[1]
+            )
+        ):
             self.speed[0] *= -1
         if self.pos[1] <= 0 or self.pos[1] >= SCREEN_HEIGHT:
             self.speed[1] *= -1
