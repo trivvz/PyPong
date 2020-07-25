@@ -35,3 +35,9 @@ class TestBall(unittest.TestCase):
         test_ball.update()
         self.assertEqual(test_ball.pos[0], 30)
         self.assertEqual(test_ball.pos[1], 70)
+
+    def test_ball_update_float(self):
+        test_ball = ball.Ball((25, 75), (5.5, -5.1))
+        test_ball.update()
+        self.assertEqual(test_ball.pos[0], 30.5)
+        self.assertEqual(test_ball.pos[1], 69.9)
