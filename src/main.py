@@ -1,4 +1,4 @@
-import sys
+import sys, random
 
 import pygame
 
@@ -6,6 +6,10 @@ from src import ball, paddle
 from src.config import SCREEN_HEIGHT, SCREEN_WIDTH
 
 SCREEN_RECT = pygame.Rect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)
+
+
+def game_over(ball, pos, speed):
+    ball.reset(pos, speed)
 
 
 def main():
@@ -16,7 +20,7 @@ def main():
 
     pygame.draw.circle(screen, (255, 255, 255), (100, 100), 10)
 
-    my_ball = ball.Ball((SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2), (5, 5))
+    my_ball = ball.Ball((SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2), (-5, 5))
     my_paddle = paddle.Paddle()
 
     while True:
@@ -24,6 +28,11 @@ def main():
         screen.fill((0, 0, 0))
         my_paddle.update()
         my_ball.update(my_paddle)
+
+        if my_ball.is_over:
+            game_over(
+                my_ball, (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2), (-5, 5),
+            )
 
         for event in pygame.event.get():
 

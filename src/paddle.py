@@ -9,6 +9,8 @@ PADDLE_COLOR = (255, 255, 255)
 PADDLE_SIZE = (5, 80)
 PADDLE_STEP = 10
 
+# TODO: find a way to simplify computation of rectangle sides
+
 
 class Paddle:
     color = PADDLE_COLOR
@@ -26,17 +28,17 @@ class Paddle:
             screen,
             self.color,
             pygame.Rect(
-                self.x - self.size[0] / 2,
-                self.y - self.size[1] / 2,
+                self.x - self.size[0] // 2,
+                self.y - self.size[1] // 2,
                 self.size[0],
                 self.size[1],
             ),
         )
 
-    def update(self):
-        if self.is_up and self.y - self.size[1] / 2 >= 0:
+    def update(self) -> None:
+        if self.is_up and self.y - self.size[1] // 2 >= 0:
             self.y -= self.speed
-        elif self.is_down and self.y + self.size[1] / 2 <= SCREEN_HEIGHT:
+        elif self.is_down and self.y + self.size[1] // 2 <= SCREEN_HEIGHT:
             self.y += self.speed
 
         self.y = self.y
