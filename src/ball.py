@@ -27,7 +27,9 @@ class Ball:
         if self.x >= self.settings.screen_width:
             self.is_over = True
         if self.x <= 0 or (
-            paddle.x + paddle.size[0] / 2 >= self.x >= paddle.x - paddle.size[0] / 2
+            paddle.rect.x + paddle.size[0] / 2
+            >= self.x
+            >= paddle.rect.x - paddle.size[0] / 2
             and paddle.y + paddle.size[1] / 2 >= self.y >= paddle.y - paddle.size[1]
         ):
             self.speed_x *= -1
