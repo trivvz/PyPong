@@ -1,7 +1,5 @@
 import pygame
 
-# TODO: find a way to simplify computation of rectangle sides
-
 
 class Paddle(pygame.sprite.Sprite):
     def __init__(self, pypong_game):
