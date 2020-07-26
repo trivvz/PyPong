@@ -1,7 +1,6 @@
 from typing import Tuple
 
 import pygame
-import numpy as np
 
 from src.config import SCREEN_HEIGHT, SCREEN_WIDTH
 

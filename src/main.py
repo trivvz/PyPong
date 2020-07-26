@@ -27,7 +27,7 @@ class PyPong:
             self.ball.update(self.paddle)
             self._update_screen()
 
-            self.clock.tick(5)
+            self.clock.tick(60)
 
     def _check_events(self):
         for event in pygame.event.get():
@@ -38,15 +38,20 @@ class PyPong:
                 sys.exit()
 
             elif event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_UP:
-                    self.paddle.up()
-
-                if event.key == pygame.K_DOWN:
-                    self.paddle.down()
+                self._check_keydown_events(event)
 
             elif event.type == pygame.KEYUP:
-                if event.key == pygame.K_UP or event.key == pygame.K_DOWN:
-                    self.paddle.stop()
+                self._check_keyup_events(event)
+
+    def _check_keydown_events(self, event):
+        if event.key == pygame.K_UP:
+            self.paddle.up()
+        if event.key == pygame.K_DOWN:
+            self.paddle.down()
+
+    def _check_keyup_events(self, event):
+        if event.key == pygame.K_UP or event.key == pygame.K_DOWN:
+            self.paddle.stop()
 
     def _update_screen(self):
         self.screen.fill(pygame.Color("black"))

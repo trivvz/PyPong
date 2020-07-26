@@ -1,6 +1,6 @@
 import unittest
 
-import numpy as np
+import pygame
 
 from src import ball, paddle
 from src.config import SCREEN_HEIGHT
@@ -25,7 +25,7 @@ class TestBall(unittest.TestCase):
 
     def test_ball_color(self):
         test_ball = ball.Ball()
-        self.assertEqual(test_ball.color, ball.BALL_COLOR)
+        self.assertEqual(test_ball.color, pygame.Color("white"))
 
     def test_ball_size(self):
         test_ball = ball.Ball()
