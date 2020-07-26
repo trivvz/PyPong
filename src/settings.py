@@ -7,6 +7,7 @@ import pygame
 class Settings:
     screen_width = 1280
     screen_height = 720
+
     bg_color = pygame.Color("black")
 
     paddle_color = pygame.Color("white")

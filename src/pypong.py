@@ -1,4 +1,4 @@
-import sys, random
+import sys
 
 import pygame
 
@@ -32,6 +32,7 @@ class PyPong:
             if self.is_game_active:
                 self.paddle.update()
                 self.ball.update()
+                self.scoreboard.update()
                 self._check_collisions()
 
             self._update_screen()
@@ -40,6 +41,7 @@ class PyPong:
 
     def _start_game(self) -> None:
         self.is_game_active = True
+        self.stats.reset_stats()
         self.paddle.center_paddle()
         self.ball.center_ball()
 
@@ -65,7 +67,7 @@ class PyPong:
         ):
             self.ball.speed_x *= -1
             self.stats.score += 1
-            self.scoreboard.prep_score()
+            self.scoreboard.update()
 
     def _check_events(self) -> None:
         for event in pygame.event.get():

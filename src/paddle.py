@@ -9,24 +9,19 @@ class Paddle(pygame.sprite.Sprite):
         self.screen_rect = pypong_game.screen.get_rect()
         self.color = self.settings.paddle_color
 
-        # Get the paddle rect
         self.rect = pygame.Rect(
             0, 0, self.settings.paddle_size_x, self.settings.paddle_size_y
         )
 
-        # Place the rect
         self.rect.centerx = self.settings.paddle_x
-        self.rect.centery = self.screen_rect.centery
-
-        self.y = float(self.rect.y)
+        self._prep()
 
         # Movement flags
         self.is_moving_up = False
         self.is_moving_down = False
 
     def center_paddle(self) -> None:
-        self.rect.centery = self.screen_rect.centery
-        self.y = float(self.rect.y)
+        self._prep()
 
     def update(self) -> None:
         if self.is_moving_up and self.rect.top > self.screen_rect.top:
@@ -40,3 +35,7 @@ class Paddle(pygame.sprite.Sprite):
         pygame.draw.rect(
             self.screen, self.color, self.rect,
         )
+
+    def _prep(self) -> None:
+        self.rect.centery = self.screen_rect.centery
+        self.y = float(self.rect.y)
