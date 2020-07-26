@@ -11,23 +11,11 @@ class TestBall(unittest.TestCase):
         self.settings = self.pypong_game.settings
         self.test_ball = ball.Ball(self.pypong_game)
 
-    def test_ball_pos_x(self):
-        self.assertEqual(self.test_ball.x, self.settings.ball_x_start)
-
-    def test_ball_pos_y(self):
-        self.assertEqual(self.test_ball.y, self.settings.ball_y_start)
-
     def test_ball_speed_x(self):
         self.assertEqual(self.test_ball.speed_x, self.settings.ball_speed_x_start)
 
     def test_ball_speed_y(self):
         self.assertEqual(self.test_ball.speed_y, self.settings.ball_speed_y_start)
-
-    def test_ball_color(self):
-        self.assertEqual(self.test_ball.color, self.settings.ball_color)
-
-    def test_ball_size(self):
-        self.assertEqual(self.test_ball.radius, self.settings.ball_radius)
 
     # def test_ball_update(self):
     #     test_ball = ball.Ball((25, 75), (5, -5))

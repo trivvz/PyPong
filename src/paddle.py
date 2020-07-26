@@ -9,6 +9,7 @@ class Paddle(pygame.sprite.Sprite):
         self.screen = pypong_game.screen
         self.settings = pypong_game.settings
         self.screen_rect = pypong_game.screen.get_rect()
+        self.color = self.settings.paddle_color
 
         # Get the paddle rect
         self.rect = pygame.Rect(
@@ -20,7 +21,6 @@ class Paddle(pygame.sprite.Sprite):
         self.rect.centery = self.screen_rect.centery
 
         self.y = float(self.rect.y)
-        self.color = self.settings.paddle_color
 
         # Movement flags
         self.is_moving_up = False
