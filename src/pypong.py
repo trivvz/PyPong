@@ -2,22 +2,22 @@ import sys, random
 
 import pygame
 
-from src import ball, paddle
-from src.config import SCREEN_HEIGHT, SCREEN_WIDTH
-
-SCREEN_RECT = pygame.Rect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)
+from src import ball, paddle, settings
 
 
 class PyPong:
     def __init__(self):
         pygame.init()
-        self.screen = pygame.display.set_mode(SCREEN_RECT.size)
+        self.settings = settings.Settings()
+        self.screen = pygame.display.set_mode(
+            (self.settings.screen_width, self.settings.screen_height)
+        )
         self.clock = pygame.time.Clock()
         pygame.display.set_caption("PyPong")
 
         # Create game objects
-        self.paddle = paddle.Paddle()
-        self.ball = ball.Ball()
+        self.paddle = paddle.Paddle(self)
+        self.ball = ball.Ball(self)
 
     def run_game(self):
         while True:
@@ -55,12 +55,7 @@ class PyPong:
 
     def _update_screen(self):
         self.screen.fill(pygame.Color("black"))
-        self.paddle.draw(self.screen)
-        self.ball.draw(self.screen)
+        self.paddle.draw()
+        self.ball.draw()
 
         pygame.display.flip()
-
-
-if __name__ == "__main__":
-    pypong = PyPong()
-    pypong.run_game()

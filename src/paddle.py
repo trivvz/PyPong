@@ -1,30 +1,23 @@
-from typing import Tuple
-
 import pygame
-
-from src.config import SCREEN_HEIGHT, SCREEN_WIDTH
-
-PADDLE_COLOR = (255, 255, 255)
-PADDLE_SIZE = (5, 80)
-PADDLE_STEP = 10
 
 # TODO: find a way to simplify computation of rectangle sides
 
 
 class Paddle:
-    color = pygame.Color("white")
-    size = PADDLE_SIZE
-    speed = PADDLE_STEP
-    x = int(0.95 * SCREEN_WIDTH)
-
-    def __init__(self, y: float = SCREEN_HEIGHT // 2):
-        self.y = round(y, -1)
+    def __init__(self, pypong_game):
+        self.screen = pypong_game.screen
+        self.settings = pypong_game.settings
+        self.color = self.settings.paddle_color
+        self.size = (self.settings.paddle_size_x, self.settings.paddle_size_y)
+        self.x = self.settings.paddle_x
+        self.speed = self.settings.paddle_speed
+        self.y = self.settings.paddle_y_start
         self.is_up = False
         self.is_down = False
 
-    def draw(self, screen) -> None:
+    def draw(self) -> None:
         pygame.draw.rect(
-            screen,
+            self.screen,
             self.color,
             pygame.Rect(
                 self.x - self.size[0] // 2,
@@ -37,7 +30,7 @@ class Paddle:
     def update(self) -> None:
         if self.is_up and self.y - self.size[1] // 2 >= 0:
             self.y -= self.speed
-        elif self.is_down and self.y + self.size[1] // 2 <= SCREEN_HEIGHT:
+        elif self.is_down and self.y + self.size[1] // 2 <= self.settings.screen_height:
             self.y += self.speed
 
         self.y = self.y
