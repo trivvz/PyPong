@@ -18,3 +18,5 @@ class Settings:
     ball_radius = 5
     ball_speed_x_start = 5
     ball_speed_y_start = 5
+
+    ticks_per_sec = 60
