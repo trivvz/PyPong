@@ -13,14 +13,10 @@ class Ball(pygame.sprite.Sprite):
             0, 0, self.settings.ball_radius, self.settings.ball_radius
         )
 
-        self.rect.centerx = self.screen_rect.centerx
-        self.rect.centery = self.screen_rect.centery
+        # Values assigned in center_ball() method
+        self.x, self.y, self.speed_x, self.speed_y = None, None, None, None
 
-        self.x = float(self.rect.x)
-        self.y = float(self.rect.y)
-
-        self.speed_x = self.settings.ball_speed_x_start
-        self.speed_y = self.settings.ball_speed_y_start
+        self.center_ball()
 
     def center_ball(self) -> None:
         self.rect.centerx = self.screen_rect.centerx

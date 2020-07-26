@@ -26,6 +26,10 @@ class Paddle(pygame.sprite.Sprite):
         self.is_moving_up = False
         self.is_moving_down = False
 
+    def center_paddle(self) -> None:
+        self.rect.centery = self.screen_rect.centery
+        self.y = float(self.rect.y)
+
     def update(self) -> None:
         if self.is_moving_up and self.rect.top > self.screen_rect.top:
             self.y -= self.settings.paddle_speed
@@ -38,7 +42,3 @@ class Paddle(pygame.sprite.Sprite):
         pygame.draw.rect(
             self.screen, self.color, self.rect,
         )
-
-    def center_paddle(self) -> None:
-        self.rect.centery = self.screen_rect.centery
-        self.y = float(self.rect.y)

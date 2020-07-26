@@ -2,7 +2,7 @@ import sys, random
 
 import pygame
 
-from src import ball, paddle, settings
+from src import ball, paddle, settings, button
 
 
 class PyPong:
@@ -15,21 +15,31 @@ class PyPong:
         self.clock = pygame.time.Clock()
         pygame.display.set_caption("PyPong")
 
+        self.is_game_active = False
+
         # Create game objects
         self.paddle = paddle.Paddle(self)
         self.ball = ball.Ball(self)
+
+        self.play_button = button.Button(self, "Play")
 
     def run_game(self) -> None:
         while True:
             self._check_events()
 
-            self.paddle.update()
-            self.ball.update()
-            self._check_ball_wall_collision()
+            if self.is_game_active:
+                self.paddle.update()
+                self.ball.update()
+                self._check_ball_wall_collision()
 
             self._update_screen()
 
             self.clock.tick(self.settings.ticks_per_sec)
+
+    def _start_game(self):
+        self.is_game_active = True
+        self.paddle.center_paddle()
+        self.ball.center_ball()
 
     def _check_ball_wall_collision(self) -> None:
         if self.ball.rect.right >= self.ball.screen_rect.right:
@@ -64,6 +74,8 @@ class PyPong:
             self.paddle.is_moving_up = True
         elif event.key == pygame.K_DOWN:
             self.paddle.is_moving_down = True
+        elif event.key == pygame.K_RETURN and not self.is_game_active:
+            self._start_game()
 
     def _check_keyup_events(self, event) -> None:
         if event.key == pygame.K_UP:
@@ -73,7 +85,11 @@ class PyPong:
 
     def _update_screen(self) -> None:
         self.screen.fill(pygame.Color("black"))
-        self.paddle.draw()
-        self.ball.draw()
+
+        if not self.is_game_active:
+            self.play_button.draw()
+        else:
+            self.paddle.draw()
+            self.ball.draw()
 
         pygame.display.flip()
