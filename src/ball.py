@@ -5,12 +5,11 @@ import numpy as np
 
 from src.config import SCREEN_HEIGHT, SCREEN_WIDTH
 
-BALL_COLOR = (255, 255, 255)
 BALL_SIZE = 5
 
 
 class Ball:
-    color = BALL_COLOR
+    color = pygame.Color("white")
     radius = BALL_SIZE
     x_init = SCREEN_WIDTH // 2
     y_init = SCREEN_HEIGHT // 2

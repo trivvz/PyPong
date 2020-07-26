@@ -8,32 +8,28 @@ from src.config import SCREEN_HEIGHT, SCREEN_WIDTH
 SCREEN_RECT = pygame.Rect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)
 
 
-def game_over(ball, pos, speed):
-    ball.reset(pos, speed)
+class PyPong:
+    def __init__(self):
+        pygame.init()
+        self.screen = pygame.display.set_mode(SCREEN_RECT.size)
+        self.clock = pygame.time.Clock()
+        pygame.display.set_caption("PyPong")
 
+        # Create game objects
+        self.paddle = paddle.Paddle()
+        self.ball = ball.Ball()
 
-def main():
-    pygame.init()
-    pygame.display.set_caption("PyPong")
-    screen = pygame.display.set_mode(SCREEN_RECT.size)
-    clock = pygame.time.Clock()
+    def run_game(self):
+        while True:
+            self._check_events()
 
-    pygame.draw.circle(screen, (255, 255, 255), (100, 100), 10)
+            self.paddle.update()
+            self.ball.update(self.paddle)
+            self._update_screen()
 
-    my_ball = ball.Ball((SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2), (-5, 5))
-    my_paddle = paddle.Paddle()
+            self.clock.tick(5)
 
-    while True:
-        # Clear screen
-        screen.fill((0, 0, 0))
-        my_paddle.update()
-        my_ball.update(my_paddle)
-
-        if my_ball.is_over:
-            game_over(
-                my_ball, (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2), (-5, 5),
-            )
-
+    def _check_events(self):
         for event in pygame.event.get():
 
             # Handle quitting via ALT+F4 and window X icon
@@ -41,24 +37,25 @@ def main():
                 pygame.quit()
                 sys.exit()
 
-            if event.type == pygame.KEYDOWN:
+            elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_UP:
-                    my_paddle.up()
+                    self.paddle.up()
 
                 if event.key == pygame.K_DOWN:
-                    my_paddle.down()
+                    self.paddle.down()
 
-            if event.type == pygame.KEYUP:
+            elif event.type == pygame.KEYUP:
                 if event.key == pygame.K_UP or event.key == pygame.K_DOWN:
-                    my_paddle.stop()
+                    self.paddle.stop()
 
-        clock.tick(60)
-
-        my_paddle.draw(screen)
-        my_ball.draw(screen)
+    def _update_screen(self):
+        self.screen.fill(pygame.Color("black"))
+        self.paddle.draw(self.screen)
+        self.ball.draw(self.screen)
 
         pygame.display.flip()
 
 
 if __name__ == "__main__":
-    main()
+    pypong = PyPong()
+    pypong.run_game()

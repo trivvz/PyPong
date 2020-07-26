@@ -13,7 +13,7 @@ PADDLE_STEP = 10
 
 
 class Paddle:
-    color = PADDLE_COLOR
+    color = pygame.Color("white")
     size = PADDLE_SIZE
     speed = PADDLE_STEP
     x = int(0.95 * SCREEN_WIDTH)
