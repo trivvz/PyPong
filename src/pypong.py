@@ -45,13 +45,15 @@ class PyPong:
 
     def _check_keydown_events(self, event):
         if event.key == pygame.K_UP:
-            self.paddle.up()
-        if event.key == pygame.K_DOWN:
-            self.paddle.down()
+            self.paddle.is_moving_up = True
+        elif event.key == pygame.K_DOWN:
+            self.paddle.is_moving_down = True
 
     def _check_keyup_events(self, event):
-        if event.key == pygame.K_UP or event.key == pygame.K_DOWN:
-            self.paddle.stop()
+        if event.key == pygame.K_UP:
+            self.paddle.is_moving_up = False
+        elif event.key == pygame.K_DOWN:
+            self.paddle.is_moving_down = False
 
     def _update_screen(self):
         self.screen.fill(pygame.Color("black"))

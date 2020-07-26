@@ -39,18 +39,6 @@ class Paddle(pygame.sprite.Sprite):
             self.screen, self.color, self.rect,
         )
 
-    def up(self) -> None:
-        self.is_moving_up = True
-        self.is_moving_down = False
-
-    def down(self) -> None:
-        self.is_moving_up = False
-        self.is_moving_down = True
-
-    def stop(self) -> None:
-        self.is_moving_up = False
-        self.is_moving_down = False
-
     def center_paddle(self) -> None:
         self.rect.centery = self.screen_rect.centery
         self.y = float(self.rect.y)
