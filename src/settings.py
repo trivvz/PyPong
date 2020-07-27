@@ -14,11 +14,11 @@ class Settings:
     paddle_size_x = 5
     paddle_size_y = 80
     paddle_speed = 15
-    paddle_x = int(0.95 * screen_width)
+    paddle_x = int(0.99 * screen_width)
 
     ball_color = pygame.Color("white")
     ball_radius = 5
-    ball_speed_x_start = 5
-    ball_speed_y_start = 5
+    ball_speed_x_start = 3
+    ball_speed_y_start = 3
 
-    ticks_per_sec = 60
+    ticks_per_sec = 180
