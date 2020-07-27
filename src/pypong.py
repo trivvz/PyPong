@@ -84,18 +84,11 @@ class PyPong:
                 self._check_keyup_events(event)
 
     def _check_keydown_events(self, event) -> None:
-        if event.key == pygame.K_UP:
-            self.paddle.is_moving_up = True
-        elif event.key == pygame.K_DOWN:
-            self.paddle.is_moving_down = True
-        elif event.key == pygame.K_RETURN and not self.is_game_active:
+        if event.key == pygame.K_RETURN and not self.is_game_active:
             self._start_game()
 
     def _check_keyup_events(self, event) -> None:
-        if event.key == pygame.K_UP:
-            self.paddle.is_moving_up = False
-        elif event.key == pygame.K_DOWN:
-            self.paddle.is_moving_down = False
+        pass
 
     def _update_screen(self) -> None:
         self.screen.fill(self.settings.bg_color)
