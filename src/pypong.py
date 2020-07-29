@@ -1,4 +1,4 @@
-import sys
+import sys, random
 
 import pygame
 
@@ -15,6 +15,11 @@ class PyPong:
         self.screen_rect = self.screen.get_rect()
         self.clock = pygame.time.Clock()
         pygame.display.set_caption("PyPong")
+
+        # Setup sounds
+        pygame.mixer.init()
+        self.hit_sound1 = pygame.mixer.Sound("sounds/hit1.wav")
+        self.hit_sound2 = pygame.mixer.Sound("sounds/hit2.wav")
 
         self.is_game_active = False  # game is active as long as ball is moving
         self.is_game_restarted = True  # game is restarted after every lost ball
@@ -84,6 +89,7 @@ class PyPong:
             self.ball.speed_x *= -1
             self.stats.score += 1
             self.scoreboard.update()
+            random.choice([self.hit_sound1, self.hit_sound2]).play()
 
     def _check_events(self) -> None:
         for event in pygame.event.get():
