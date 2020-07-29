@@ -51,7 +51,7 @@ class PyPong:
         self.paddle.center_paddle()
         self.ball.center_ball()
 
-    def _stop_game(self):
+    def _stop_game(self) -> None:
         """Stop game after losing a ball"""
         self.is_game_restarted = True
         self.is_game_active = False
@@ -95,9 +95,6 @@ class PyPong:
             elif event.type == pygame.KEYDOWN:
                 self._check_keydown_events(event)
 
-            elif event.type == pygame.KEYUP:
-                self._check_keyup_events(event)
-
     def _check_keydown_events(self, event) -> None:
         if event.key == pygame.K_q:
             pygame.quit()
@@ -113,9 +110,6 @@ class PyPong:
                 pygame.mouse.set_visible(True)
                 pygame.event.set_grab(False)
 
-    def _check_keyup_events(self, event) -> None:
-        pass
-
     def _update_screen(self) -> None:
         self.screen.fill(self.settings.bg_color)
 
@@ -129,7 +123,7 @@ class PyPong:
 
         pygame.display.flip()
 
-    def _draw_dynamic_objects(self):
+    def _draw_dynamic_objects(self) -> None:
         self.paddle.draw()
         self.ball.draw()
         self.scoreboard.draw()
