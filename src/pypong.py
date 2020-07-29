@@ -75,7 +75,9 @@ class PyPong:
 
     def _check_ball_paddle_collision(self) -> None:
         if (
-            self.paddle.rect.right >= self.ball.rect.right >= self.paddle.rect.left
+            self.paddle.rect.left + self.ball.speed_x
+            >= self.ball.rect.right
+            >= self.paddle.rect.left
             and self.paddle.rect.bottom >= self.ball.rect.bottom >= self.paddle.rect.top
         ):
             self.ball.speed_x *= -1
