@@ -12,6 +12,7 @@ class PyPong:
         self.screen = pygame.display.set_mode(
             (self.settings.screen_width, self.settings.screen_height)
         )
+        self.screen_rect = self.screen.get_rect()
         self.clock = pygame.time.Clock()
         pygame.display.set_caption("PyPong")
 
@@ -86,11 +87,17 @@ class PyPong:
 
     def _check_events(self) -> None:
         for event in pygame.event.get():
-
             # Handle quitting via ALT+F4 and window X icon
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
+
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                if event.button == 1:  # LMB
+                    if self.is_game_restarted and self.screen_rect.collidepoint(
+                        pygame.mouse.get_pos()
+                    ):  # clicking anywhere on game screen will start the game
+                        self._start_game()
 
             elif event.type == pygame.KEYDOWN:
                 self._check_keydown_events(event)
