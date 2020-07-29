@@ -15,7 +15,8 @@ class PyPong:
         self.clock = pygame.time.Clock()
         pygame.display.set_caption("PyPong")
 
-        self.is_game_active = False
+        self.is_game_active = False  # game is active as long as ball is moving
+        self.is_game_restarted = True  # game is restarted after every lost ball
         self.stats = game_stats.GameStats()
         self.scoreboard = scoreboard.Scoreboard(self)
 
@@ -23,7 +24,8 @@ class PyPong:
         self.paddle = paddle.Paddle(self)
         self.ball = ball.Ball(self)
 
-        self.play_button = button.Button(self, "Play")
+        self.play_text = button.Button(self, "Play")
+        self.pause_text = button.Button(self, "Paused")
 
     def run_game(self) -> None:
         while True:
@@ -40,10 +42,21 @@ class PyPong:
             self.clock.tick(self.settings.ticks_per_sec)
 
     def _start_game(self) -> None:
+        """Start game after selecting Play option (RETURN key)"""
+        pygame.mouse.set_visible(False)
+        pygame.event.set_grab(True)
+        self.is_game_restarted = False
         self.is_game_active = True
         self.stats.reset_stats()
         self.paddle.center_paddle()
         self.ball.center_ball()
+
+    def _stop_game(self):
+        """Stop game after losing a ball"""
+        self.is_game_restarted = True
+        self.is_game_active = False
+        pygame.mouse.set_visible(True)
+        pygame.event.set_grab(False)
 
     def _check_collisions(self) -> None:
         self._check_ball_wall_collision()
@@ -51,7 +64,7 @@ class PyPong:
 
     def _check_ball_wall_collision(self) -> None:
         if self.ball.rect.right >= self.ball.screen_rect.right:
-            self.is_game_active = False
+            self._stop_game()
         elif self.ball.rect.left <= self.ball.screen_rect.left:
             self.ball.speed_x *= -1
         elif (
@@ -84,8 +97,19 @@ class PyPong:
                 self._check_keyup_events(event)
 
     def _check_keydown_events(self, event) -> None:
-        if event.key == pygame.K_RETURN and not self.is_game_active:
+        if event.key == pygame.K_q:
+            pygame.quit()
+            sys.exit()
+        elif event.key == pygame.K_RETURN and self.is_game_restarted:
             self._start_game()
+        elif event.key == pygame.K_ESCAPE:  # pause/unpause the game
+            self.is_game_active = not self.is_game_active
+            if self.is_game_active:
+                pygame.mouse.set_visible(False)
+                pygame.event.set_grab(True)
+            else:
+                pygame.mouse.set_visible(True)
+                pygame.event.set_grab(False)
 
     def _check_keyup_events(self, event) -> None:
         pass
@@ -93,11 +117,17 @@ class PyPong:
     def _update_screen(self) -> None:
         self.screen.fill(self.settings.bg_color)
 
-        if not self.is_game_active:
-            self.play_button.draw()
+        if self.is_game_restarted:
+            self.play_text.draw()
+        elif not self.is_game_active:
+            self.pause_text.draw()
+            self._draw_dynamic_objects()
         else:
-            self.paddle.draw()
-            self.ball.draw()
-            self.scoreboard.draw()
+            self._draw_dynamic_objects()
 
         pygame.display.flip()
+
+    def _draw_dynamic_objects(self):
+        self.paddle.draw()
+        self.ball.draw()
+        self.scoreboard.draw()
