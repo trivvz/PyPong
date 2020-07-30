@@ -1,4 +1,5 @@
-import sys, random
+import sys
+import random
 
 import pygame
 
@@ -81,10 +82,8 @@ class PyPong:
 
     def _check_ball_paddle_collision(self) -> None:
         if (
-            self.paddle.rect.left + self.ball.speed_x
-            >= self.ball.rect.right
-            >= self.paddle.rect.left
-            and self.paddle.rect.bottom >= self.ball.rect.bottom >= self.paddle.rect.top
+            pygame.Rect.colliderect(self.ball.rect, self.paddle.rect)
+            and self.paddle.rect.left + self.ball.speed_x >= self.ball.rect.right
         ):
             self.ball.speed_x *= -1
             self.stats.score += 1
