@@ -16,12 +16,20 @@ class Paddle(pygame.sprite.Sprite):
         self.rect.centerx = self.settings.paddle_x
         self.y: float
 
+        self.accel_max = 0
+        self.accel_min = 0
+
     def center_paddle(self) -> None:
         pygame.mouse.set_pos(pygame.mouse.get_pos()[0], self.screen_rect.centery)
 
     def update(self) -> None:
         # TODO: take paddle acceleration into account using mouse.get_rel()
         self.y = pygame.mouse.get_pos()[1]
+        self.accel_y = pygame.mouse.get_rel()[1]
+
+        self.accel_max = max(self.accel_max, self.accel_y)
+        self.accel_min = min(self.accel_min, self.accel_y)
+
         self.rect.centery = self.y
         if self.rect.top < self.screen_rect.top:
             self.rect.top = self.screen_rect.top

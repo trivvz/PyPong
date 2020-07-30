@@ -18,7 +18,7 @@ class Settings:
 
     ball_color = pygame.Color("white")
     ball_radius = 5
-    ball_speed_x_start = 3
-    ball_speed_y_start = 3
+    ball_speed_x_start = 5
+    ball_speed_y_start = 0
 
     ticks_per_sec = 180
