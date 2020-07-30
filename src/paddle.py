@@ -14,11 +14,10 @@ class Paddle(pygame.sprite.Sprite):
         )
 
         self.rect.centerx = self.settings.paddle_x
-        self.y: int = 0  # only defined here, value assigned in _prep()
-        self._prep()
+        self.y: float
 
     def center_paddle(self) -> None:
-        self._prep()
+        pygame.mouse.set_pos(pygame.mouse.get_pos()[0], self.screen_rect.centery)
 
     def update(self) -> None:
         # TODO: take paddle acceleration into account using mouse.get_rel()
@@ -33,7 +32,3 @@ class Paddle(pygame.sprite.Sprite):
         pygame.draw.rect(
             self.screen, self.color, self.rect,
         )
-
-    def _prep(self) -> None:
-        self.rect.centery = self.screen_rect.centery
-        self.y = self.rect.y
