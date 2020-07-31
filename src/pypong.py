@@ -18,6 +18,7 @@ class PyPong:
 
         # Setup sounds
         pygame.mixer.init()
+        self.is_sound_enabled = True
         self.sounds = sounds.Sounds()
 
         self.is_game_active = False  # game is active as long as ball is moving
@@ -81,10 +82,10 @@ class PyPong:
             self.paddle.accel_max = 0
         elif self.ball.rect.left <= self.screen_rect.left:
             self.ball.speed_x *= -1
-        elif self.ball.rect.top <= self.screen_rect.top:
-            self.ball.speed_y *= -1
-            self.sounds.hit.play()
-        elif self.ball.rect.bottom >= self.screen_rect.bottom:
+        elif (
+            self.ball.rect.top <= self.screen_rect.top
+            or self.ball.rect.bottom >= self.screen_rect.bottom
+        ):
             self.ball.speed_y *= -1
             self.sounds.hit.play()
 
@@ -129,6 +130,13 @@ class PyPong:
         if event.key == pygame.K_q:
             pygame.quit()
             sys.exit()
+        elif event.key == pygame.K_m:
+            self.is_sound_enabled = self.sounds.mute(
+                self.is_sound_enabled,
+                self.sounds.player1,
+                self.sounds.player2,
+                self.sounds.hit,
+            )
         elif event.key == pygame.K_RETURN and self.is_game_restarted:
             self._start_game()
         elif event.key == pygame.K_ESCAPE:  # pause/unpause the game
