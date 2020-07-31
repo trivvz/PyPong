@@ -1,5 +1,4 @@
 import sys
-import random
 
 import pygame
 
@@ -73,13 +72,16 @@ class PyPong:
         self._check_ball_paddle_ai_collision()
 
     def _check_ball_wall_collision(self) -> None:
-        if self.ball.rect.right >= self.ball.screen_rect.right:
+        if (
+            self.ball.rect.right >= self.screen_rect.right
+            or self.ball.rect.left <= self.screen_rect.left
+        ):
             self._stop_game()
-        elif self.ball.rect.left <= self.ball.screen_rect.left:
+        elif self.ball.rect.left <= self.screen_rect.left:
             self.ball.speed_x *= -1
         elif (
-            self.ball.rect.top <= self.ball.screen_rect.top
-            or self.ball.rect.bottom >= self.ball.screen_rect.bottom
+            self.ball.rect.top <= self.screen_rect.top
+            or self.ball.rect.bottom >= self.screen_rect.bottom
         ):
             self.ball.speed_y *= -1
 
