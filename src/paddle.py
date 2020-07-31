@@ -14,13 +14,12 @@ class Paddle(pygame.sprite.Sprite):
         )
 
         self.rect.centerx = self.settings.paddle_x
-        self.y: float
+        self.y: float = 0.0
 
     def center_paddle(self) -> None:
         pygame.mouse.set_pos(pygame.mouse.get_pos()[0], self.screen_rect.centery)
 
     def update(self) -> None:
-        # TODO: take paddle acceleration into account using mouse.get_rel()
         self.y = pygame.mouse.get_pos()[1]
         self.rect.centery = self.y
         if self.rect.top < self.screen_rect.top:
@@ -32,3 +31,18 @@ class Paddle(pygame.sprite.Sprite):
         pygame.draw.rect(
             self.screen, self.color, self.rect,
         )
+
+
+class PaddleAI(Paddle):
+    def __init__(self, pypong_game):
+        super(PaddleAI, self).__init__(pypong_game)
+        self.ball = pypong_game.ball
+        self.rect.centerx = self.settings.paddle_x_ai
+
+    def update(self):
+        self.y = self.ball.y
+        self.rect.centery = self.y
+        if self.rect.top < self.screen_rect.top:
+            self.rect.top = self.screen_rect.top
+        elif self.rect.bottom > self.screen_rect.bottom:
+            self.rect.bottom = self.screen_rect.bottom

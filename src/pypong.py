@@ -28,8 +28,9 @@ class PyPong:
         self.scoreboard = scoreboard.Scoreboard(self)
 
         # Create game objects
-        self.paddle = paddle.Paddle(self)
         self.ball = ball.Ball(self)
+        self.paddle = paddle.Paddle(self)
+        self.paddle_ai = paddle.PaddleAI(self)
 
         self.play_text = button.Button(self, "Play")
         self.pause_text = button.Button(self, "Paused")
@@ -40,6 +41,7 @@ class PyPong:
 
             if self.is_game_active:
                 self.paddle.update()
+                self.paddle_ai.update()
                 self.ball.update()
                 self.scoreboard.update()
                 self._check_collisions()
@@ -137,5 +139,6 @@ class PyPong:
 
     def _draw_dynamic_objects(self) -> None:
         self.paddle.draw()
+        self.paddle_ai.draw()
         self.ball.draw()
         self.scoreboard.draw()
