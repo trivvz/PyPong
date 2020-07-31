@@ -77,9 +77,6 @@ class PyPong:
             or self.ball.rect.left <= self.screen_rect.left
         ):
             self._stop_game()
-            print(f"min: {self.paddle.accel_min}\nmax: {self.paddle.accel_max}\n")
-            self.paddle.accel_min = 0
-            self.paddle.accel_max = 0
         elif self.ball.rect.left <= self.screen_rect.left:
             self.ball.speed_x *= -1
         elif (
@@ -94,15 +91,8 @@ class PyPong:
             pygame.Rect.colliderect(self.ball.rect, self.paddle.rect)
             and self.paddle.rect.left + self.ball.speed_x >= self.ball.rect.right
         ):
-            # TODO: replace print with logging if still needed
-            print(f"hit: {self.paddle.accel_y}")
             self.ball.speed_x *= -1
-            print(f"old speed: {self.ball.speed_y}")
             self.ball.speed_y += round(self.paddle.accel_y / 10, 1)
-            print(f"new speed: {self.ball.speed_y}\n")
-
-            self.paddle.accel_max = max(self.paddle.accel_max, self.paddle.accel_y)
-            self.paddle.accel_min = min(self.paddle.accel_min, self.paddle.accel_y)
 
             self.stats.score += 1
             self.scoreboard.update()

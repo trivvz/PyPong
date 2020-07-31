@@ -17,9 +17,6 @@ class Paddle(pygame.sprite.Sprite):
         self.y: float = 0.0
         self.accel_y: int = 0
 
-        self.accel_max = 0
-        self.accel_min = 0
-
     def center_paddle(self) -> None:
         pygame.mouse.set_pos(pygame.mouse.get_pos()[0], self.screen_rect.centery)
 
@@ -46,6 +43,7 @@ class PaddleAI(Paddle):
         self.rect.centerx = self.settings.paddle_x_ai
 
     def update(self) -> None:
+        # TODO: take acceleration of ai_paddle into account
         self.y = self.ball.y
         self.rect.centery = self.y
         if self.rect.top < self.screen_rect.top:
