@@ -70,6 +70,7 @@ class PyPong:
     def _check_collisions(self) -> None:
         self._check_ball_wall_collision()
         self._check_ball_paddle_collision()
+        self._check_ball_paddle_ai_collision()
 
     def _check_ball_wall_collision(self) -> None:
         if self.ball.rect.right >= self.ball.screen_rect.right:
@@ -90,7 +91,12 @@ class PyPong:
             self.ball.speed_x *= -1
             self.stats.score += 1
             self.scoreboard.update()
-            random.choice([self.hit_sound1, self.hit_sound2]).play()
+            self.hit_sound1.play()
+
+    def _check_ball_paddle_ai_collision(self) -> None:
+        if pygame.Rect.colliderect(self.ball.rect, self.paddle_ai.rect):
+            self.ball.speed_x *= -1
+            self.hit_sound2.play()
 
     def _check_events(self) -> None:
         for event in pygame.event.get():
