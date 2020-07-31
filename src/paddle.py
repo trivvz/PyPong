@@ -15,6 +15,7 @@ class Paddle(pygame.sprite.Sprite):
 
         self.rect.centerx = self.settings.paddle_x
         self.y: float = 0.0
+        self.accel_y: int = 0
 
         self.accel_max = 0
         self.accel_min = 0
@@ -47,7 +48,7 @@ class PaddleAI(Paddle):
         self.ball = pypong_game.ball
         self.rect.centerx = self.settings.paddle_x_ai
 
-    def update(self):
+    def update(self) -> None:
         self.y = self.ball.y
         self.rect.centery = self.y
         if self.rect.top < self.screen_rect.top:

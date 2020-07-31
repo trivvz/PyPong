@@ -2,7 +2,7 @@ import sys
 
 import pygame
 
-from src import ball, paddle, settings, button, game_stats, scoreboard
+from src import ball, paddle, settings, button, game_stats, scoreboard, sounds
 
 
 class PyPong:
@@ -18,8 +18,7 @@ class PyPong:
 
         # Setup sounds
         pygame.mixer.init()
-        self.hit_sound1 = pygame.mixer.Sound("sounds/hit1.wav")
-        self.hit_sound2 = pygame.mixer.Sound("sounds/hit2.wav")
+        self.sounds = sounds.Sounds()
 
         self.is_game_active = False  # game is active as long as ball is moving
         self.is_game_restarted = True  # game is restarted after every lost ball
@@ -82,11 +81,12 @@ class PyPong:
             self.paddle.accel_max = 0
         elif self.ball.rect.left <= self.screen_rect.left:
             self.ball.speed_x *= -1
-        elif (
-            self.ball.rect.top <= self.screen_rect.top
-            or self.ball.rect.bottom >= self.screen_rect.bottom
-        ):
+        elif self.ball.rect.top <= self.screen_rect.top:
             self.ball.speed_y *= -1
+            self.sounds.hit.play()
+        elif self.ball.rect.bottom >= self.screen_rect.bottom:
+            self.ball.speed_y *= -1
+            self.sounds.hit.play()
 
     def _check_ball_paddle_collision(self) -> None:
         if (
@@ -101,12 +101,12 @@ class PyPong:
             print(f"new speed: {self.ball.speed_y}\n")
             self.stats.score += 1
             self.scoreboard.update()
-            self.hit_sound1.play()
+            self.sounds.player1.play()
 
     def _check_ball_paddle_ai_collision(self) -> None:
         if pygame.Rect.colliderect(self.ball.rect, self.paddle_ai.rect):
             self.ball.speed_x *= -1
-            self.hit_sound2.play()
+            self.sounds.player2.play()
 
     def _check_events(self) -> None:
         for event in pygame.event.get():
