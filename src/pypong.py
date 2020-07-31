@@ -100,6 +100,10 @@ class PyPong:
             print(f"old speed: {self.ball.speed_y}")
             self.ball.speed_y += round(self.paddle.accel_y / 10, 1)
             print(f"new speed: {self.ball.speed_y}\n")
+
+            self.paddle.accel_max = max(self.paddle.accel_max, self.paddle.accel_y)
+            self.paddle.accel_min = min(self.paddle.accel_min, self.paddle.accel_y)
+
             self.stats.score += 1
             self.scoreboard.update()
             self.sounds.player1.play()

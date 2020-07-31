@@ -27,9 +27,6 @@ class Paddle(pygame.sprite.Sprite):
         self.y = pygame.mouse.get_pos()[1]
         self.accel_y = pygame.mouse.get_rel()[1]
 
-        self.accel_max = max(self.accel_max, self.accel_y)
-        self.accel_min = min(self.accel_min, self.accel_y)
-
         self.rect.centery = self.y
         if self.rect.top < self.screen_rect.top:
             self.rect.top = self.screen_rect.top
