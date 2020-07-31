@@ -1,5 +1,4 @@
 import sys
-import random
 
 import pygame
 
@@ -28,8 +27,9 @@ class PyPong:
         self.scoreboard = scoreboard.Scoreboard(self)
 
         # Create game objects
-        self.paddle = paddle.Paddle(self)
         self.ball = ball.Ball(self)
+        self.paddle = paddle.Paddle(self)
+        self.paddle_ai = paddle.PaddleAI(self)
 
         self.play_text = button.Button(self, "Play")
         self.pause_text = button.Button(self, "Paused")
@@ -40,6 +40,7 @@ class PyPong:
 
             if self.is_game_active:
                 self.paddle.update()
+                self.paddle_ai.update()
                 self.ball.update()
                 self.scoreboard.update()
                 self._check_collisions()
@@ -68,18 +69,22 @@ class PyPong:
     def _check_collisions(self) -> None:
         self._check_ball_wall_collision()
         self._check_ball_paddle_collision()
+        self._check_ball_paddle_ai_collision()
 
     def _check_ball_wall_collision(self) -> None:
-        if self.ball.rect.right >= self.ball.screen_rect.right:
+        if (
+            self.ball.rect.right >= self.screen_rect.right
+            or self.ball.rect.left <= self.screen_rect.left
+        ):
             self._stop_game()
             print(f"min: {self.paddle.accel_min}\nmax: {self.paddle.accel_max}\n")
             self.paddle.accel_min = 0
             self.paddle.accel_max = 0
-        elif self.ball.rect.left <= self.ball.screen_rect.left:
+        elif self.ball.rect.left <= self.screen_rect.left:
             self.ball.speed_x *= -1
         elif (
-            self.ball.rect.top <= self.ball.screen_rect.top
-            or self.ball.rect.bottom >= self.ball.screen_rect.bottom
+            self.ball.rect.top <= self.screen_rect.top
+            or self.ball.rect.bottom >= self.screen_rect.bottom
         ):
             self.ball.speed_y *= -1
 
@@ -96,7 +101,12 @@ class PyPong:
             print(f"new speed: {self.ball.speed_y}\n")
             self.stats.score += 1
             self.scoreboard.update()
-            random.choice([self.hit_sound1, self.hit_sound2]).play()
+            self.hit_sound1.play()
+
+    def _check_ball_paddle_ai_collision(self) -> None:
+        if pygame.Rect.colliderect(self.ball.rect, self.paddle_ai.rect):
+            self.ball.speed_x *= -1
+            self.hit_sound2.play()
 
     def _check_events(self) -> None:
         for event in pygame.event.get():
@@ -145,5 +155,6 @@ class PyPong:
 
     def _draw_dynamic_objects(self) -> None:
         self.paddle.draw()
+        self.paddle_ai.draw()
         self.ball.draw()
         self.scoreboard.draw()
