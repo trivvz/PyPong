@@ -52,7 +52,6 @@ class PyPong:
     def _start_game(self) -> None:
         """Start game after selecting Play option (RETURN key)"""
         pygame.mouse.set_visible(False)
-        pygame.event.set_grab(True)
         self.is_game_restarted = False
         self.is_game_active = True
         self.stats.reset_stats()
@@ -64,7 +63,6 @@ class PyPong:
         self.is_game_restarted = True
         self.is_game_active = False
         pygame.mouse.set_visible(True)
-        pygame.event.set_grab(False)
 
     def _check_collisions(self) -> None:
         self._check_ball_wall_collision()
@@ -137,10 +135,8 @@ class PyPong:
             self.is_game_active = not self.is_game_active
             if self.is_game_active:
                 pygame.mouse.set_visible(False)
-                pygame.event.set_grab(True)
             else:
                 pygame.mouse.set_visible(True)
-                pygame.event.set_grab(False)
 
     def _update_screen(self) -> None:
         self.screen.fill(self.settings.bg_color)

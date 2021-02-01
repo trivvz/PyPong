@@ -18,7 +18,7 @@ class Paddle(pygame.sprite.Sprite):
         self.accel_y: int = 0
 
     def center_paddle(self) -> None:
-        pygame.mouse.set_pos(pygame.mouse.get_pos()[0], self.screen_rect.centery)
+        pygame.mouse.set_pos(self.screen_rect.centerx, self.screen_rect.centery)
 
     def update(self) -> None:
         self.y = pygame.mouse.get_pos()[1]
@@ -32,7 +32,9 @@ class Paddle(pygame.sprite.Sprite):
 
     def draw(self) -> None:
         pygame.draw.rect(
-            self.screen, self.color, self.rect,
+            self.screen,
+            self.color,
+            self.rect,
         )
 
 
